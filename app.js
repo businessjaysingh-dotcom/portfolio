@@ -95,8 +95,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',
 if(location.hash==='#email-preview'||new URLSearchParams(location.search).get('from')==='email'){
  const banner=document.getElementById('email-return'),button=document.getElementById('email-return-button'),note=document.getElementById('email-return-note');
  if(banner&&button&&note){banner.hidden=false;button.addEventListener('click',()=>{
-  if(document.referrer&&/^(https?:)/.test(document.referrer)&&history.length>1){history.back();return;}
-  window.close();
-  note.textContent='If this tab stays open, switch back to your email tab. Your message is still there.';
+  let fromMail=false;try{const ref=new URL(document.referrer);fromMail=ref.protocol==='https:'&&ref.hostname==='mail.google.com'&&ref.pathname.startsWith('/mail/');}catch{}
+  if(fromMail&&history.length>1){history.back();return;}
+  note.textContent='On your phone, use Done or switch back to Gmail. You can also use Open Gmail below and choose the account that received Jay’s email. This page will stay open.';
  });}
 }
