@@ -22,20 +22,16 @@ document.querySelectorAll('svg [data-view]').forEach(b => b.addEventListener('ke
 const motionButton = document.querySelector('#motion-toggle');
 const motionBoard = document.querySelector('.notes-board');
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-let manualMotionPause=false;
+let manualMotionPause=null;
 function syncMotionPreference() {
-  motionButton.disabled = motionPreference.matches;
-  motionBoard.dataset.motion = motionPreference.matches || manualMotionPause ? 'paused' : 'playing';
-  motionButton.setAttribute('aria-pressed', String(motionPreference.matches || manualMotionPause));
-  motionButton.textContent = motionPreference.matches ? 'Motion off' : manualMotionPause ? 'Resume motion' : 'Pause motion';
+  const paused=manualMotionPause===null?motionPreference.matches:manualMotionPause;
+  motionButton.disabled=false;
+  motionBoard.dataset.motion=paused?'paused':'playing';
+  document.documentElement.dataset.motionOptin=String(motionPreference.matches&&!paused);
+  motionButton.setAttribute('aria-pressed',String(paused));
+  motionButton.textContent=paused?'Enable motion':'Pause motion';
 }
-motionButton.addEventListener('click', () => {
-  const paused = motionBoard.dataset.motion !== 'paused';
-  manualMotionPause=paused;
-  motionBoard.dataset.motion = paused ? 'paused' : 'playing';
-  motionButton.setAttribute('aria-pressed', String(paused));
-  motionButton.textContent = paused ? 'Resume motion' : 'Pause motion';
-});
+motionButton.addEventListener('click',()=>{manualMotionPause=motionBoard.dataset.motion!=='paused';syncMotionPreference();});
 motionPreference.addEventListener('change', syncMotionPreference);
 syncMotionPreference();
 if ('IntersectionObserver' in window) {

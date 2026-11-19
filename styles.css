@@ -70,3 +70,9 @@
 html[data-ui-motion=paused] .pd-panel,html[data-ui-motion=paused] .pd-sheet,html[data-ui-motion=paused] dialog[open]{animation:none}
 
 html[data-ui-motion=paused] .case-card:hover{transform:none}html[data-ui-motion=paused] .case-card,html[data-ui-motion=paused] .desk-primary,html[data-ui-motion=paused] .text-link{transition:none}
+
+/* An explicit page-only motion choice may override the default reduced-motion presentation. */
+html[data-motion-optin=true] .drawing .tool-float{animation:tool-drift 8s ease-in-out infinite!important}html[data-motion-optin=true] .motion-reveal{transition:opacity .44s ease,transform .44s ease!important}html[data-motion-optin=true] .pd-panel,html[data-motion-optin=true] .pd-sheet,html[data-motion-optin=true] dialog[open]{animation:ui-enter .24s ease-out!important}html[data-ui-motion=paused] .drawing .tool-float{animation-play-state:paused!important}
+
+html[data-motion-optin=true] .notes-board[data-visible=false] .tool-float{animation-play-state:paused!important}
+@media(max-width:700px){.project,.case-grid,.resources,.detail-columns{grid-template-columns:minmax(0,1fr)}.project-figure{min-width:0;margin-left:0;margin-right:0}.case-grid>*{min-width:0}}
