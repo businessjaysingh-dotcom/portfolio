@@ -92,7 +92,7 @@ syncHashView();
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const view=a.getAttribute('href').slice(1);if(sections.includes(view))chooseView(view);else if(view==='home')chooseView('research');}));
 
 // No mailbox identity, message ID or tracking parameters are included in the link.
-if(new URLSearchParams(location.search).get('from')==='email'){
+if(location.hash==='#email-preview'||new URLSearchParams(location.search).get('from')==='email'){
  const banner=document.getElementById('email-return'),button=document.getElementById('email-return-button'),note=document.getElementById('email-return-note');
  if(banner&&button&&note){banner.hidden=false;button.addEventListener('click',()=>{
   if(document.referrer&&/^(https?:)/.test(document.referrer)&&history.length>1){history.back();return;}
